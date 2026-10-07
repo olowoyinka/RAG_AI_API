@@ -135,6 +135,8 @@ ON document_chunks
 );
 
 ```
+
+```text
                          ┌──────────────────────┐
                          │      Client/UI       │
                          └──────────┬───────────┘
@@ -146,7 +148,7 @@ ON document_chunks
                              │              │
                     INGESTION│              │QUERY
                              │              │
-              ┌──────────────▼───┐    ┌────▼──────────────┐
+              ┌──────────────▼───┐     ┌────▼──────────────┐
               │ Document Parser   │    │         Query Embedding   │
               │ PDF/DOCX/TXT/MD   │    │         BGE-small-en-v1.5 │
               └──────────┬────────┘    └────────┬─────────┘
@@ -159,36 +161,36 @@ ON document_chunks
                   ┌──────▼──────┐               │
                   │  Embedding  │                   │ Top-K
                   │    Model    │                   │
-                  └──────┬──────┘        ┌──────▼─────────┐
+                  └──────┬──────┘                ┌──────▼─────────┐
                          │                      │    Reranker     │
                          ▼                      │ Cross Encoder   │
-              ┌────────────────────┐     └──────┬─────────┘
+              ┌────────────────────┐             └──────┬─────────┘
               │ PostgreSQL         │                    │
-              │ Documents          │                  │
-              │ Chunks             │            │
-              │ Embeddings         │            │
-              └────────────────────┘     ┌──────▼──────────┐
-                                         │ Context Builder │
-                                         └──────┬──────────┘
-                                                │
-                                         ┌──────▼──────────┐
-                                         │ Prompt Template │
-                                         └──────┬──────────┘
-                                                │
-                                         ┌──────▼──────────┐
-                                         │ Generator LLM   │
-                                         │ Ollama / OpenAI │
-                                         │ / Azure OpenAI │
-                                         └──────┬──────────┘
-                                                │
-                                         ┌──────▼──────────┐
-                                         │ Answer + Sources│
-                                         └─────────────────┘
+              │ Documents          │                    │
+                  │ Chunks             │                │
+                  │ Embeddings         │                │
+                  └────────────────────┘         ┌──────▼──────────┐
+                                                 │ Context Builder │
+                                                 └──────┬──────────┘
+                                                        │
+                                                 ┌──────▼──────────┐
+                                                 │ Prompt Template │
+                                                 └──────┬──────────┘
+                                                        │
+                                                 ┌──────▼──────────┐
+                                                 │ Generator LLM   │
+                                                 │ Ollama / OpenAI │
+                                                 │ / Azure OpenAI │
+                                                 └──────┬──────────┘
+                                                        │
+                                                 ┌──────▼──────────┐
+                                                 │ Answer + Sources│
+                                                 └─────────────────┘
 
 
+```
 
-
-
+```text
                  ┌───────────────┐
                  │    Document   │
                  └───────┬───────┘
@@ -218,8 +220,9 @@ ON document_chunks
                 │ + pgvector      │
                 └─────────────────┘
 
+```
 
-
+```text
 AskAsync()
    │
    ├── Embedding
@@ -234,9 +237,9 @@ AskAsync()
    │
    └── LLM Generation
 
+```
 
-
-
+```text
                   INGESTION
                       │
                       ▼
@@ -300,3 +303,5 @@ AskAsync()
                       │
                       ▼
                Answer + Sources
+
+```
