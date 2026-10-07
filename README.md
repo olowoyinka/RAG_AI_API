@@ -18,7 +18,6 @@ CREATE TABLE IF NOT EXISTS knowledge_bases
     "Description" TEXT NULL,
     "IsActive" BOOLEAN NOT NULL DEFAULT TRUE,
     "CreatedOn" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
     CONSTRAINT "PK_knowledge_bases"
         PRIMARY KEY ("Id")
 );
@@ -36,29 +35,20 @@ CREATE TABLE IF NOT EXISTS documents
 (
     "Id" UUID NOT NULL,
     "TenantId" UUID NOT NULL,
-
     "FileName" VARCHAR(1000) NOT NULL,
     "ContentType" VARCHAR(1000) NOT NULL,
     "FileSize" BIGINT NOT NULL,
-
     "StoragePath" TEXT NULL,
     "ContentHash" TEXT NULL,
-
     "Version" INTEGER NOT NULL DEFAULT 1,
-
     -- Stored as string because of HasConversion<string>()
     "Status" VARCHAR(30) NOT NULL DEFAULT 'Pending',
-
     "ErrorMessage" TEXT NULL,
-
     "CreatedOn" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "ProcessedOn" TIMESTAMPTZ NULL,
-
     "KnowledgeBaseId" UUID NOT NULL,
-
     CONSTRAINT "PK_documents"
         PRIMARY KEY ("Id"),
-
     CONSTRAINT "FK_documents_knowledge_bases_KnowledgeBaseId"
         FOREIGN KEY ("KnowledgeBaseId")
         REFERENCES knowledge_bases ("Id")
@@ -83,30 +73,20 @@ CREATE TABLE IF NOT EXISTS document_chunks
 (
     "Id" UUID NOT NULL,
     "TenantId" UUID NOT NULL,
-
     "ChunkIndex" INTEGER NOT NULL,
     "Content" TEXT NOT NULL,
-
     "Heading" TEXT NULL,
-
     "TokenCount" INTEGER NOT NULL,
     "PageNumber" INTEGER NOT NULL,
-
     "MetadataJson" TEXT NULL,
-
     "EmbeddingModel" VARCHAR(200) NOT NULL,
     "EmbeddingDimensions" INTEGER NOT NULL,
-
     -- pgvector
     "Embedding" VECTOR(384) NOT NULL,
-
     "CreatedOn" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
     "DocumentId" UUID NOT NULL,
-
     CONSTRAINT "PK_document_chunks"
         PRIMARY KEY ("Id"),
-
     CONSTRAINT "FK_document_chunks_documents_DocumentId"
         FOREIGN KEY ("DocumentId")
         REFERENCES documents ("Id")
@@ -152,13 +132,7 @@ ON document_chunks
     "DocumentId"
 );
 
-
-
-
-
-
-
-                ┌──────────────────────┐
+                         ┌──────────────────────┐
                          │      Client/UI       │
                          └──────────┬───────────┘
                                     │
@@ -212,7 +186,7 @@ ON document_chunks
 
 
 
- ┌───────────────┐
+                 ┌───────────────┐
                  │    Document   │
                  └───────┬───────┘
                          ↓
